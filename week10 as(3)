@@ -1,0 +1,23 @@
+import java.util.*;
+
+public class Main {
+    public static List<String> rotateRoster(List<String> names, int k) {
+        int n = names.size();
+        k = k % n;
+
+        List<String> result = new ArrayList<>(Collections.nCopies(n, ""));
+
+        for (int i = 0; i < n; i++) {
+            result.set((i + k) % n, names.get(i));
+        }
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        List<String> names = Arrays.asList("A", "B", "C", "D", "E");
+        int k = 2;
+
+        System.out.println(rotateRoster(names, k));
+    }
+}

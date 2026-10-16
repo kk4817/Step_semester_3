@@ -1,0 +1,21 @@
+class Solution {
+    public int[] busiestRow(int[][] grid) {
+        int maxTotal = -1;
+        int maxRow = 0;
+
+        for (int i = 0; i < grid.length; i++) {
+            int total = 0;
+
+            for (int j = 0; j < grid[i].length; j++) {
+                total += grid[i][j];
+            }
+
+            if (total > maxTotal) {
+                maxTotal = total;
+                maxRow = i;
+            }
+        }
+
+        return new int[]{maxRow, maxTotal};
+    }
+}

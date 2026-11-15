@@ -1,0 +1,98 @@
+import java.util.Scanner;
+
+// Base class
+class Staff {
+    protected String name;
+    protected double baseSalary;
+
+    public Staff(String name, double baseSalary) {
+        this.name = name;
+        this.baseSalary = baseSalary;
+    }
+
+    public double getBonus() {
+        return 0.0;
+    }
+
+    public double getTotalSalary() {
+        return baseSalary + getBonus();
+    }
+
+    public String getRole() {
+        return "Staff";
+    }
+}
+
+// Subclass for Teacher
+class Teacher extends Staff {
+    public Teacher(String name, double baseSalary) {
+        super(name, baseSalary);
+    }
+
+    @Override
+    public double getBonus() {
+        return 5000.0;
+    }
+
+    @Override
+    public String getRole() {
+        return "Teacher";
+    }
+}
+
+// Subclass for LabAssistant
+class LabAssistant extends Staff {
+    public LabAssistant(String name, double baseSalary) {
+        super(name, baseSalary);
+    }
+
+    @Override
+    public double getBonus() {
+        return 2000.0;
+    }
+
+    @Override
+    public String getRole() {
+        return "LabAssistant";
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        if (!sc.hasNextInt()) return;
+        int n = sc.nextInt();
+        
+        Staff[] staffList = new Staff[n];
+
+        for (int i = 0; i < n; i++) {
+            String type = sc.next();
+            String name = sc.next();
+            double baseSalary = sc.nextDouble();
+
+            if (type.equals("Teacher")) {
+                staffList[i] = new Teacher(name, baseSalary);
+            } else if (type.equals("LabAssistant")) {
+                staffList[i] = new LabAssistant(name, baseSalary);
+            } else {
+                staffList[i] = new Staff(name, baseSalary);
+            }
+        }
+
+        double grandTotal = 0.0;
+
+        // Single loop to print each person's details and accumulate total
+        for (Staff s : staffList) {
+            double bonus = s.getBonus();
+            double total = s.getTotalSalary();
+            grandTotal += total;
+
+            System.out.printf("%s (%s): base %.1f, bonus %.1f, total %.1f%n",
+                    s.name, s.getRole(), s.baseSalary, bonus, total);
+        }
+
+        System.out.printf("Grand Total Salary: %.1f%n", grandTotal);
+        sc.close();
+    }
+}

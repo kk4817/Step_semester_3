@@ -1,0 +1,37 @@
+def calculate_hostel_bills():
+    # Read number of rooms
+    n = int(input().strip())
+    
+    rooms_billed = 0
+    total_block_bill = 0
+    
+    for _ in range(n):
+        room, reading_str = input().split()
+        units = int(reading_str)
+        
+        # Check for invalid negative reading
+        if units < 0:
+            print(f"{room}: invalid reading")
+            continue
+            
+        # Calculate slab charges using an else-if ladder
+        if units <= 100:
+            usage_cost = units * 3
+        elif units <= 200:
+            usage_cost = (100 * 3) + (units - 100) * 5
+        else:
+            usage_cost = (100 * 3) + (100 * 5) + (units - 200) * 8
+            
+        # Add fixed meter charge of 50
+        bill = usage_cost + 50
+        
+        # Update counters
+        rooms_billed += 1
+        total_block_bill += bill
+        
+        print(f"{room}: {units} units, bill {bill}")
+        
+    print(f"Rooms billed {rooms_billed}, total {total_block_bill}")
+
+if __name__ == "__main__":
+    calculate_hostel_bills()

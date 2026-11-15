@@ -1,0 +1,50 @@
+import java.util.Arrays;
+
+public class HeightLineUp {
+
+    public static void lineUp(int[] heights) {
+        int n = heights.length;
+
+        // Perform passes from left to right
+        for (int i = 0; i < n - 1; i++) {
+            boolean swapped = false;
+
+            // Compare adjacent elements
+            for (int j = 0; j < n - 1 - i; j++) {
+                if (heights[j] > heights[j + 1]) {
+                    // Swap adjacent elements if the left one is bigger
+                    int temp = heights[j];
+                    heights[j] = heights[j + 1];
+                    heights[j + 1] = temp;
+                    swapped = true;
+                }
+            }
+
+            // Print the array after the current sweep
+            System.out.println("Pass " + (i + 1) + ": " + Arrays.toString(heights));
+
+            // Stop if no swaps occurred in this sweep
+            if (!swapped) {
+                break;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        // Sample Input 1
+        int[] heights1 = {4, 2, 5, 1};
+        lineUp(heights1);
+        
+        System.out.println(); // Blank line to separate outputs
+
+        // Sample Input 2
+        int[] heights2 = {1, 3, 2, 4};
+        lineUp(heights2);
+
+        System.out.println();
+
+        // Custom Input
+        int[] customHeights = {9, 7, 5, 3, 1};
+        lineUp(customHeights);
+    }
+}

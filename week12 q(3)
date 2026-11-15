@@ -1,0 +1,61 @@
+def library_return_desk(commands):
+    CAPACITY = 3
+    
+    # Stack initialization for the book pile
+    pile = [None] * CAPACITY
+    top = -1
+    
+    # Circular Queue initialization for the student line
+    line = [None] * CAPACITY
+    front = 0
+    rear = -1
+    size = 0
+    
+    for cmd in commands:
+        parts = cmd.strip().split()
+        action = parts[0]
+        
+        if action == "RETURN":
+            book = parts[1]
+            if top == CAPACITY - 1:
+                print(f"{book} rejected: pile is full")
+            else:
+                top += 1
+                pile[top] = book
+                print(f"{book} placed on pile")
+                
+        elif action == "SHELVE":
+            if top == -1:
+                print("pile is empty")
+            else:
+                book = pile[top]
+                top -= 1
+                print(f"shelved {book}")
+                
+        elif action == "WAIT":
+            student = parts[1]
+            if size == CAPACITY:
+                print(f"{student} rejected: line is full")
+            else:
+                rear = (rear + 1) % CAPACITY
+                line[rear] = student
+                size += 1
+                print(f"{student} joined the line")
+                
+        elif action == "SERVE":
+            if size == 0:
+                print("no one waiting")
+            else:
+                student = line[front]
+                front = (front + 1) % CAPACITY
+                size -= 1
+                print(f"served {student}")
+
+# Example Execution
+example_commands = [
+    "RETURN B1", "RETURN B2", "RETURN B3", "RETURN B4",
+    "WAIT Asha", "WAIT Ravi", "SHELVE", "SERVE",
+    "SHELVE", "SHELVE", "SHELVE", "SERVE", "SERVE"
+]
+
+library_return_desk(example_commands)

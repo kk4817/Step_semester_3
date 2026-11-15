@@ -1,0 +1,78 @@
+public class PlateStack {
+
+    // Custom Node class with data and next fields
+    private static class Node {
+        String data;
+        Node next;
+
+        Node(String data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    private Node head; // Represents the top of the stack
+    private int size;
+
+    public PlateStack() {
+        this.head = null;
+        this.size = 0;
+    }
+
+    // Adds a node at the head
+    public void push(String plate) {
+        Node newNode = new Node(plate);
+        newNode.next = head;
+        head = newNode;
+        size++;
+        System.out.println("push " + plate + " -> top " + head.data + ", size " + size);
+    }
+
+    // Removes and returns the head node
+    public String pop() {
+        if (isEmpty()) {
+            System.out.println("pop -> stack is empty");
+            return null;
+        }
+        String removedPlate = head.data;
+        head = head.next;
+        size--;
+        System.out.println("pop -> " + removedPlate + ", size " + size);
+        return removedPlate;
+    }
+
+    // Returns the top element without removing it
+    public String peek() {
+        if (isEmpty()) {
+            System.out.println("peek -> stack is empty");
+            return null;
+        }
+        System.out.println("peek -> " + head.data);
+        return head.data;
+    }
+
+    // Checks if the stack is empty
+    public boolean isEmpty() {
+        return head == null;
+    }
+
+    // Helper to print isEmpty matching the example output format
+    public void checkEmpty() {
+        System.out.println("isEmpty -> " + isEmpty());
+    }
+
+    public static void main(String[] args) {
+        PlateStack stack = new PlateStack();
+
+        // Running the example sequence
+        stack.push("P1");
+        stack.push("P2");
+        stack.peek();
+        stack.pop();
+        stack.push("P3");
+        stack.pop();
+        stack.pop();
+        stack.pop();
+        stack.checkEmpty();
+    }
+}

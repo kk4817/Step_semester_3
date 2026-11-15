@@ -1,0 +1,46 @@
+import java.util.Scanner;
+
+public class WeeklyRainfallAnalysis {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        double[] rainfall = new double[7];
+
+        // 1. Read 7 days of rainfall into the array
+        for (int i = 0; i < 7; i++) {
+            rainfall[i] = scanner.nextDouble();
+        }
+
+        double total = 0.0;
+        int wettestDayIndex = 0;
+        int dryDays = 0;
+
+        // 2. Compute total, wettest day index, and dry days using a loop
+        for (int i = 0; i < 7; i++) {
+            total += rainfall[i];
+
+            if (rainfall[i] > rainfall[wettestDayIndex]) {
+                wettestDayIndex = i;
+            }
+
+            if (rainfall[i] == 0.0) {
+                dryDays++;
+            }
+        }
+
+        double average = total / 7.0;
+
+        // 3. Print formatted output
+        System.out.print("Rainfall (mm):");
+        for (int i = 0; i < 7; i++) {
+            System.out.printf(" %.1f", rainfall[i]);
+        }
+        System.out.println();
+
+        System.out.printf("Total Rainfall: %.1f mm%n", total);
+        System.out.printf("Average Rainfall: %.2f mm%n", average);
+        System.out.printf("Wettest Day: Day %d (%.1f mm)%n", (wettestDayIndex + 1), rainfall[wettestDayIndex]);
+        System.out.println("Total Dry Days: " + dryDays);
+
+        scanner.close();
+    }
+}

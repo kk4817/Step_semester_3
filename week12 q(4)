@@ -1,0 +1,90 @@
+import java.util.Scanner;
+
+// Interface defining the payment contract
+interface PaymentMode {
+    double processPayment(double amount);
+    String getModeName();
+}
+
+// Cash payment implementation (0% fee)
+class CashPayment implements PaymentMode {
+    @Override
+    public double processPayment(double amount) {
+        double fee = 0.0;
+        double processed = amount + fee;
+        System.out.println(getModeName() + ": amount " + amount + ", fee " + fee + ", processed " + processed);
+        return processed;
+    }
+
+    @Override
+    public String getModeName() {
+        return "Cash";
+    }
+}
+
+// Card payment implementation (2% fee)
+class CardPayment implements PaymentMode {
+    @Override
+    public double processPayment(double amount) {
+        double fee = amount * 0.02;
+        double processed = amount + fee;
+        System.out.println(getModeName() + ": amount " + amount + ", fee " + fee + ", processed " + processed);
+        return processed;
+    }
+
+    @Override
+    public String getModeName() {
+        return "Card";
+    }
+}
+
+// UPI payment implementation (0% fee)
+class UpiPayment implements PaymentMode {
+    @Override
+    public double processPayment(double amount) {
+        double fee = 0.0;
+        double processed = amount + fee;
+        System.out.println(getModeName() + ": amount " + amount + ", fee " + fee + ", processed " + processed);
+        return processed;
+    }
+
+    @Override
+    public String getModeName() {
+        return "UPI";
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        if (!sc.hasNextInt()) return;
+        int n = sc.nextInt();
+
+        PaymentMode[] payments = new PaymentMode[n];
+        double[] amounts = new double[n];
+
+        // Read inputs and instantiate appropriate payment objects
+        for (int i = 0; i < n; i++) {
+            String mode = sc.next();
+            amounts[i] = sc.nextDouble();
+
+            if (mode.equalsIgnoreCase("Cash")) {
+                payments[i] = new CashPayment();
+            } else if (mode.equalsIgnoreCase("Card")) {
+                payments[i] = new CardPayment();
+            } else if (mode.equalsIgnoreCase("UPI")) {
+                payments[i] = new UpiPayment();
+            }
+        }
+
+        // Process all payments polymorphically
+        double totalProcessed = 0.0;
+        for (int i = 0; i < n; i++) {
+            totalProcessed += payments[i].processPayment(amounts[i]);
+        }
+
+        System.out.println("Total Amount Processed: " + totalProcessed);
+        sc.close();
+    }
+}
